@@ -1,6 +1,6 @@
 /* PROC FCMP allows you to use datastep-like logic to generate custom functions and call routines.
    FCMP can be very useful for simplifying code and applying custom functions to procs that support it.
-   In addition, %sysfunc() works with PROC FCMP functions as well.
+   In addition, %sysfunc() works with PROC FCMP functions.
    SAS functions, conditional logic, and even other FCMP functions are all supported within PROC FCMP.
 
    Functions are stored within datasets as packages. For example, you may have a dataset with
@@ -56,7 +56,7 @@ run;
 /********* Example 2: String Functions *********/
 /* PROC FCMP also supports string functions. 
    The below function will take a space-separated string,
-   convert quote each item, then add a comma between them.
+   quote each item, then add a comma between them.
    For example:
 
    a b c
@@ -89,17 +89,17 @@ proc fcmp outlib=work.funcs.string;
 run;
 
 /* This function can make macro variable lists easier to work with. 
-   Now users can just space-separate a list and cquote can comma/quote it
+   Now users can space-separate a list and cquote can comma/quote it
    for IN() statements.
 */
 %let mylist = cars class air;
 
-/* Note: there's a bug in 9.4M5 that will produce an error. There is a hotfix for this:
+/* Note: there's a bug in 9.4M5 that will produce an error with %sysfunc(). There is a hotfix for this:
    https://support.sas.com/kb/62/306.html
    A workaround is to use call symputx instead.
 
 */
-/*%let mylistcq = %sysfunc(cquote(&mylist.));*/
+/*%let mylistcq = %upcase(%qsysfunc(cquote(&mylist.)));*/
 
 data _null_;
 	call symputx('mylistcq', upcase(cquote("&mylist.")) );
