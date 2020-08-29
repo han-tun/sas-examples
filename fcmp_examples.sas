@@ -1,4 +1,4 @@
-/* PROC FCMP allows you to use datstep-like logic to generate custom functions and call routines.
+/* PROC FCMP allows you to use datastep-like logic to generate custom functions and call routines.
    FCMP can be very useful for simplifying code and applying custom functions to procs that support it.
    In addition, %sysfunc() works with PROC FCMP functions as well.
    SAS functions, conditional logic, and even other FCMP functions are all supported within PROC FCMP.
