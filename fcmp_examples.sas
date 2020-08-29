@@ -4,7 +4,7 @@
    SAS functions, conditional logic, and even other FCMP functions are all supported within PROC FCMP.
 
    Functions are stored within datasets as packages. For example, you may have a dataset with
-   a family of functions devoted to time. You can load these packages as needed with the OPTIONS CMPLIB=(3-LEVEL LIBNAME) statement.
+   a family of functions devoted to time. You can load these packages as needed with the OPTIONS CMPLIB=(2-LEVEL LIBNAME) statement.
    To store custom functions, you must output it as a 3-level libname statement.
 
    The 3-level libname statement is a bit unique to PROC FCMP. The name "outlib" is a little deceptive, 
@@ -40,9 +40,10 @@ proc fcmp outlib=work.funcs.time;
 run;
 
 /* The dataset "work.funcs" has been created. Within "work.funcs," the package "time" is also created.
-   You can load this package with the OPTIONS CMPLIB=(3-LEVEL LIBNAME) statement.
+   You can load this package with the OPTIONS CMPLIB=(2-LEVEL LIBNAME) statement.
 */
-options cmplib=(work.funcs.time);
+
+options cmplib=(work.funcs);
 
 data fy;
 	format date date9.;
@@ -86,8 +87,6 @@ proc fcmp outlib=work.funcs.string;
 		return(strout);
 	endsub;
 run;
-
-options cmplib=(work.funcs.string);
 
 /* This function can make macro variable lists easier to work with. 
    Now users can just space-separate a list and cquote can comma/quote it
@@ -137,14 +136,6 @@ data inverse;
 	call inverse(0, inv);
 	output;
 run;
-
-/********* Example 4: Loading multiple packages *********/
-
-/* You can call and load multiple function families */
-options cmplib=(work.funcs.time
-				work.funcs.string 
-				work.funcs.subs
-			   );
 
 /* FCMP can also do much more, like python functions and C structures. Check out the documentation
    for additional information. Happy coding!
