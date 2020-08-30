@@ -54,8 +54,7 @@ run;
 
 
 /********* Example 2: String Functions *********/
-/* PROC FCMP also supports string functions. 
-   The below function will take a space-separated string,
+/* The below function will take a space-separated string,
    quote each item, then add a comma between them.
    For example:
 
@@ -66,16 +65,13 @@ run;
 proc fcmp outlib=work.funcs.string;
 	function cquote(strin$) $ 200;	/* Returns a char function of max length */
 		length strout 	  $32767
-			   token
-			   next_token $1
-		;
+			   token $1;
 
 		strclean = compbl(strin);
 		strout 	 = '"';
 
 		do i = 1 to length(strclean);
 			token 	   = substr(strclean, i, 1);
-			next_token = substr(strclean, i+1, 1);
 
 			if(i < length(strclean) ) then do;
 				if(token = ' ') then strout = catt(strout, '","');
@@ -88,8 +84,8 @@ proc fcmp outlib=work.funcs.string;
 	endsub;
 run;
 
-/* This function can make macro variable lists easier to work with. 
-   Now users can space-separate a list and cquote can comma/quote it
+/* This function can make macro variable lists easier for users to work with and modify.
+   Users can add a space-separate a list, and cquote() can be used by developers to comma/quote it
    for IN() statements.
 */
 %let mylist = cars class air;
